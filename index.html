@@ -1,0 +1,882 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ Aura Color Detector - Discover Your Energy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1a0033 0%, #2d1b4e 25%, #4a2c6b 50%, #2d1b4e 75%, #1a0033 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            position: relative;
+        }
+
+        .crystal-ball {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 30px;
+            position: relative;
+            animation: levitate 3s ease-in-out infinite;
+        }
+
+        @keyframes levitate {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .crystal-ball-inner {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4), rgba(138,43,226,0.3), rgba(75,0,130,0.6));
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 0 60px rgba(138,43,226,0.8),
+                        inset 0 0 40px rgba(255,255,255,0.2);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 60px rgba(138,43,226,0.8), inset 0 0 40px rgba(255,255,255,0.2); }
+            50% { box-shadow: 0 0 80px rgba(255,105,180,0.9), inset 0 0 60px rgba(255,255,255,0.3); }
+        }
+
+        .crystal-shine {
+            position: absolute;
+            top: 20%;
+            left: 25%;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, rgba(255,255,255,0.8), transparent);
+            border-radius: 50%;
+            animation: shine 2s ease-in-out infinite;
+        }
+
+        @keyframes shine {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, #f8b4ff 50%, #ffd700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(255,255,255,0.3);
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { filter: drop-shadow(0 0 10px rgba(255,255,255,0.3)); }
+            50% { filter: drop-shadow(0 0 20px rgba(255,182,193,0.6)); }
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            color: #e0b3ff;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 40px;
+            margin: 30px 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            animation: cardEntrance 0.6s ease-out;
+        }
+
+        @keyframes cardEntrance {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-container {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .question-number {
+            font-family: 'Cinzel', serif;
+            color: #ffd700;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .question-text {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .options {
+            display: grid;
+            gap: 15px;
+        }
+
+        .option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .option:hover::before {
+            left: 100%;
+        }
+
+        .option:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 182, 193, 0.6);
+            transform: translateX(10px);
+            box-shadow: 0 5px 20px rgba(255, 105, 180, 0.3);
+        }
+
+        .option-emoji {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff69b4, #ffd700, #ff69b4);
+            background-size: 200% 100%;
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.5s ease;
+            animation: progressGlow 2s linear infinite;
+        }
+
+        @keyframes progressGlow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .start-btn, .restart-btn, .share-btn {
+            background: linear-gradient(135deg, #ff69b4, #ba55d3);
+            border: none;
+            color: white;
+            padding: 18px 50px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 25px rgba(255, 105, 180, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .start-btn::before, .restart-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .start-btn:hover::before, .restart-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .start-btn:hover, .restart-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 35px rgba(255, 105, 180, 0.6);
+        }
+
+        .start-btn span, .restart-btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        #result {
+            display: none;
+            text-align: center;
+        }
+
+        .aura-visualization {
+            width: 300px;
+            height: 300px;
+            margin: 40px auto;
+            position: relative;
+            animation: auraRotate 10s linear infinite;
+        }
+
+        @keyframes auraRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .aura-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            animation: auraPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes auraPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.9; }
+        }
+
+        .aura-circle-1 {
+            width: 300px;
+            height: 300px;
+            animation-delay: 0s;
+        }
+
+        .aura-circle-2 {
+            width: 230px;
+            height: 230px;
+            animation-delay: 0.5s;
+        }
+
+        .aura-circle-3 {
+            width: 160px;
+            height: 160px;
+            animation-delay: 1s;
+        }
+
+        .result-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5em;
+            margin: 30px 0 20px;
+            font-weight: 700;
+        }
+
+        .result-description {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #e0b3ff;
+            margin-bottom: 20px;
+        }
+
+        .result-traits {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .trait-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3em;
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+
+        .trait-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .trait-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 1.05em;
+        }
+
+        .trait-list li:last-child {
+            border-bottom: none;
+        }
+
+        .trait-list li::before {
+            content: '✨ ';
+            margin-right: 10px;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            padding: 12px 30px;
+            font-size: 1em;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .share-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        #intro {
+            text-align: center;
+        }
+
+        .intro-text {
+            font-size: 1.15em;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: #e0b3ff;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2em;
+            }
+
+            .crystal-ball {
+                width: 100px;
+                height: 100px;
+            }
+
+            .glass-card {
+                padding: 25px;
+            }
+
+            .question-text {
+                font-size: 1.2em;
+            }
+
+            .aura-visualization {
+                width: 250px;
+                height: 250px;
+            }
+
+            .aura-circle-1 {
+                width: 250px;
+                height: 250px;
+            }
+
+            .aura-circle-2 {
+                width: 190px;
+                height: 190px;
+            }
+
+            .aura-circle-3 {
+                width: 130px;
+                height: 130px;
+            }
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 50px;
+            height: 50px;
+            margin: 20px auto;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-top: 5px solid #ff69b4;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <header>
+            <div class="crystal-ball">
+                <div class="crystal-ball-inner">
+                    <div class="crystal-shine"></div>
+                </div>
+            </div>
+            <h1>✨ Aura Color Detector ✨</h1>
+            <p class="subtitle">Unveil the mystical colors of your energy field</p>
+        </header>
+
+        <div id="intro" class="glass-card fade-in">
+            <p class="intro-text">
+                Welcome, seeker of truth. Your aura is the energetic field that surrounds you, 
+                reflecting your emotions, personality, and spiritual essence. Through ancient wisdom 
+                and modern insight, we will reveal the dominant color of your unique energy signature.
+            </p>
+            <p class="intro-text">
+                Answer 8 mystical questions honestly, and discover the color that resonates with your soul.
+            </p>
+            <button class="start-btn" onclick="startQuiz()">
+                <span>Begin Your Journey</span>
+            </button>
+        </div>
+
+        <div id="quiz" style="display: none;">
+            <div class="glass-card">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar"></div>
+                </div>
+                
+                <div id="questionsContainer"></div>
+            </div>
+        </div>
+
+        <div id="result" class="glass-card">
+            <div class="loading-spinner" id="loadingSpinner"></div>
+            <div id="resultContent" style="display: none;">
+                <div class="aura-visualization" id="auraViz">
+                    <div class="aura-circle aura-circle-1"></div>
+                    <div class="aura-circle aura-circle-2"></div>
+                    <div class="aura-circle aura-circle-3"></div>
+                </div>
+                
+                <h2 class="result-title" id="resultTitle"></h2>
+                <p class="result-description" id="resultDescription"></p>
+                
+                <div class="result-traits">
+                    <h3 class="trait-title">Your Aura Traits</h3>
+                    <ul class="trait-list" id="traitList"></ul>
+                </div>
+
+                <div class="share-buttons">
+                    <button class="share-btn" onclick="shareTwitter()">
+                        <span>🐦 Share on Twitter</span>
+                    </button>
+                    <button class="share-btn" onclick="shareFacebook()">
+                        <span>📘 Share on Facebook</span>
+                    </button>
+                    <button class="share-btn" onclick="copyLink()">
+                        <span>🔗 Copy Link</span>
+                    </button>
+                </div>
+
+                <button class="restart-btn" onclick="restartQuiz()">
+                    <span>✨ Discover Another Aura</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Quiz Questions
+        const questions = [
+            {
+                question: "When you enter a room full of people, what do you naturally do?",
+                options: [
+                    { text: "Seek deep, meaningful conversations", emoji: "💜", points: { purple: 3, blue: 2 } },
+                    { text: "Observe and analyze the social dynamics", emoji: "💙", points: { blue: 3, purple: 1 } },
+                    { text: "Find ways to help and nurture others", emoji: "💚", points: { green: 3, pink: 2 } },
+                    { text: "Take charge and organize activities", emoji: "💛", points: { gold: 3, red: 1 } },
+                    { text: "Spread joy and create a warm atmosphere", emoji: "💗", points: { pink: 3, green: 1 } },
+                    { text: "Energize the room with your passion", emoji: "❤️", points: { red: 3, gold: 2 } }
+                ]
+            },
+            {
+                question: "What draws you most in life?",
+                options: [
+                    { text: "Spiritual growth and inner wisdom", emoji: "🔮", points: { purple: 3 } },
+                    { text: "Knowledge and understanding truth", emoji: "📚", points: { blue: 3 } },
+                    { text: "Harmony and healing others", emoji: "🌿", points: { green: 3 } },
+                    { text: "Success and achievement", emoji: "👑", points: { gold: 3 } },
+                    { text: "Love and emotional connections", emoji: "💕", points: { pink: 3 } },
+                    { text: "Adventure and taking action", emoji: "🔥", points: { red: 3 } }
+                ]
+            },
+            {
+                question: "How do you handle stress?",
+                options: [
+                    { text: "Meditate and seek spiritual guidance", emoji: "🧘", points: { purple: 3, blue: 1 } },
+                    { text: "Analyze the situation logically", emoji: "🤔", points: { blue: 3, gold: 1 } },
+                    { text: "Connect with nature or help others", emoji: "🌳", points: { green: 3, pink: 1 } },
+                    { text: "Create a plan and take control", emoji: "📋", points: { gold: 3, red: 1 } },
+                    { text: "Seek comfort from loved ones", emoji: "🤗", points: { pink: 3, green: 1 } },
+                    { text: "Channel it into physical activity", emoji: "💪", points: { red: 3, gold: 1 } }
+                ]
+            },
+            {
+                question: "What kind of environments energize you?",
+                options: [
+                    { text: "Sacred spaces and spiritual retreats", emoji: "⛩️", points: { purple: 3 } },
+                    { text: "Libraries and quiet study areas", emoji: "📖", points: { blue: 3 } },
+                    { text: "Natural settings and gardens", emoji: "🌺", points: { green: 3 } },
+                    { text: "Professional settings and boardrooms", emoji: "🏢", points: { gold: 3 } },
+                    { text: "Cozy, warm spaces with loved ones", emoji: "🏡", points: { pink: 3 } },
+                    { text: "Dynamic, exciting environments", emoji: "🎪", points: { red: 3 } }
+                ]
+            },
+            {
+                question: "Your ideal way to spend a weekend?",
+                options: [
+                    { text: "Exploring mystical practices or philosophy", emoji: "🌙", points: { purple: 3, blue: 1 } },
+                    { text: "Learning something new and complex", emoji: "🎓", points: { blue: 3, purple: 1 } },
+                    { text: "Volunteering or caring for others", emoji: "🤲", points: { green: 3, pink: 2 } },
+                    { text: "Working on ambitious projects", emoji: "🎯", points: { gold: 3, red: 1 } },
+                    { text: "Quality time with family and friends", emoji: "👨‍👩‍👧‍👦", points: { pink: 3, green: 1 } },
+                    { text: "Pursuing thrilling adventures", emoji: "🏔️", points: { red: 3, gold: 1 } }
+                ]
+            },
+            {
+                question: "What role do you naturally take in a group?",
+                options: [
+                    { text: "The spiritual guide and visionary", emoji: "🌟", points: { purple: 3 } },
+                    { text: "The logical thinker and strategist", emoji: "🧩", points: { blue: 3 } },
+                    { text: "The peacemaker and healer", emoji: "☮️", points: { green: 3 } },
+                    { text: "The leader and decision-maker", emoji: "⚡", points: { gold: 3 } },
+                    { text: "The supporter and emotional anchor", emoji: "💝", points: { pink: 3 } },
+                    { text: "The motivator and action-taker", emoji: "🚀", points: { red: 3 } }
+                ]
+            },
+            {
+                question: "What's your relationship with intuition?",
+                options: [
+                    { text: "I live by it - it's my primary guide", emoji: "🔯", points: { purple: 3, pink: 1 } },
+                    { text: "I balance it with logical analysis", emoji: "⚖️", points: { blue: 3, purple: 1 } },
+                    { text: "I use it to sense others' needs", emoji: "💫", points: { green: 3, pink: 1 } },
+                    { text: "I trust it when making big decisions", emoji: "💼", points: { gold: 3, blue: 1 } },
+                    { text: "I feel things deeply and trust my heart", emoji: "💗", points: { pink: 3, green: 1 } },
+                    { text: "I trust my gut for quick decisions", emoji: "⚡", points: { red: 3, gold: 1 } }
+                ]
+            },
+            {
+                question: "What's your ultimate life purpose?",
+                options: [
+                    { text: "Achieving enlightenment and helping others awaken", emoji: "✨", points: { purple: 3 } },
+                    { text: "Discovering and sharing knowledge", emoji: "🎓", points: { blue: 3 } },
+                    { text: "Healing the world and creating harmony", emoji: "🌍", points: { green: 3 } },
+                    { text: "Building legacy and inspiring excellence", emoji: "🏆", points: { gold: 3 } },
+                    { text: "Spreading love and nurturing relationships", emoji: "💞", points: { pink: 3 } },
+                    { text: "Living passionately and making bold changes", emoji: "🔥", points: { red: 3 } }
+                ]
+            }
+        ];
+
+        // Aura Results
+        const auraResults = {
+            purple: {
+                title: "💜 Purple Aura - The Mystic",
+                description: "You possess a rare and powerful purple aura, the mark of a true mystic and spiritual seeker. Your energy resonates with the highest frequencies of consciousness, connecting you deeply to the spiritual realm. You have natural psychic abilities and an innate understanding of life's deeper mysteries.",
+                traits: [
+                    "Highly intuitive and spiritually aware",
+                    "Natural healer and spiritual guide",
+                    "Deep connection to the mystical and metaphysical",
+                    "Visionary with profound insights",
+                    "Attracted to meditation and spiritual practices"
+                ],
+                colors: ["#8B00FF", "#9932CC", "#BA55D3"]
+            },
+            blue: {
+                title: "💙 Blue Aura - The Truth Seeker",
+                description: "Your blue aura radiates calm wisdom and clarity. You are a natural communicator and truth seeker, blessed with the gift of clear perception and honest expression. Your peaceful energy brings tranquility to those around you, and your thirst for knowledge is insatiable.",
+                traits: [
+                    "Excellent communicator and speaker",
+                    "Deeply honest and value truth above all",
+                    "Calm, peaceful, and centered presence",
+                    "Natural teacher and wisdom keeper",
+                    "Strong sense of integrity and justice"
+                ],
+                colors: ["#0080FF", "#4169E1", "#6495ED"]
+            },
+            green: {
+                title: "💚 Green Aura - The Healer",
+                description: "Your green aura glows with the energy of life, growth, and healing. You are a natural nurturer with a deep connection to nature and all living things. Your heart-centered energy has the power to heal and restore balance, making you a beacon of harmony in a chaotic world.",
+                traits: [
+                    "Natural healer and empath",
+                    "Deep love for nature and animals",
+                    "Brings balance and harmony to situations",
+                    "Compassionate and understanding",
+                    "Strong desire to help and nurture others"
+                ],
+                colors: ["#00C851", "#2ECC71", "#7FFF00"]
+            },
+            gold: {
+                title: "💛 Gold Aura - The Leader",
+                description: "Your golden aura shines with divine wisdom, confidence, and leadership. You possess a rare combination of spiritual insight and practical power. Natural-born leaders are drawn to you, and you have the ability to inspire and guide others toward their highest potential.",
+                traits: [
+                    "Natural leader with strong presence",
+                    "Confident and charismatic",
+                    "Excellent at manifesting goals",
+                    "Wise beyond your years",
+                    "Attracts success and abundance"
+                ],
+                colors: ["#FFD700", "#FFA500", "#FFAA00"]
+            },
+            pink: {
+                title: "💗 Pink Aura - The Lover",
+                description: "Your pink aura radiates with the pure frequency of unconditional love and compassion. You have an extraordinary capacity for empathy and emotional depth. Your loving energy creates safe spaces where others can open their hearts, and your presence alone can heal emotional wounds.",
+                traits: [
+                    "Overflowing with love and compassion",
+                    "Highly empathetic and sensitive",
+                    "Creates deep emotional connections",
+                    "Artistic and creative soul",
+                    "Natural romantic and idealist"
+                ],
+                colors: ["#FF69B4", "#FFB6C1", "#FFC0CB"]
+            },
+            red: {
+                title: "❤️ Red Aura - The Warrior",
+                description: "Your red aura burns with passion, courage, and vital life force energy. You are a natural warrior and action-taker, blessed with incredible drive and determination. Your powerful energy motivates others to take action and make bold moves toward their dreams.",
+                traits: [
+                    "Passionate and intense energy",
+                    "Courageous and fearless",
+                    "Strong physical vitality",
+                    "Natural athlete and competitor",
+                    "Takes decisive action quickly"
+                ],
+                colors: ["#FF0000", "#DC143C", "#FF4444"]
+            }
+        };
+
+        let currentQuestion = 0;
+        let scores = { purple: 0, blue: 0, green: 0, gold: 0, pink: 0, red: 0 };
+
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        function startQuiz() {
+            document.getElementById('intro').style.display = 'none';
+            document.getElementById('quiz').style.display = 'block';
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+            
+            const questionData = questions[currentQuestion];
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question-container active';
+            
+            questionDiv.innerHTML = `
+                <div class="question-number">Question ${currentQuestion + 1} of ${questions.length}</div>
+                <h2 class="question-text">${questionData.question}</h2>
+                <div class="options">
+                    ${questionData.options.map((option, index) => `
+                        <div class="option" onclick="selectAnswer(${index})">
+                            <span class="option-emoji">${option.emoji}</span>
+                            <span>${option.text}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+            container.appendChild(questionDiv);
+            updateProgress();
+        }
+
+        function selectAnswer(optionIndex) {
+            const option = questions[currentQuestion].options[optionIndex];
+            
+            // Add points to scores
+            for (let color in option.points) {
+                scores[color] += option.points[color];
+            }
+            
+            currentQuestion++;
+            
+            if (currentQuestion < questions.length) {
+                renderQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function updateProgress() {
+            const progress = (currentQuestion / questions.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function showResult() {
+            document.getElementById('quiz').style.display = 'none';
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('loadingSpinner').style.display = 'block';
+            
+            // Simulate loading for dramatic effect
+            setTimeout(() => {
+                calculateAndDisplayResult();
+            }, 2000);
+        }
+
+        function calculateAndDisplayResult() {
+            // Find the highest scoring aura
+            let highestScore = 0;
+            let dominantAura = 'purple';
+            
+            for (let color in scores) {
+                if (scores[color] > highestScore) {
+                    highestScore = scores[color];
+                    dominantAura = color;
+                }
+            }
+            
+            const result = auraResults[dominantAura];
+            
+            // Update aura visualization
+            const auraCircles = document.querySelectorAll('.aura-circle');
+            auraCircles.forEach((circle, index) => {
+                circle.style.background = `radial-gradient(circle, ${result.colors[0]}44, ${result.colors[1]}66, ${result.colors[2]}44)`;
+                circle.style.boxShadow = `0 0 ${60 - index * 15}px ${result.colors[index]}`;
+            });
+            
+            // Update result content
+            document.getElementById('resultTitle').textContent = result.title;
+            document.getElementById('resultDescription').textContent = result.description;
+            
+            const traitList = document.getElementById('traitList');
+            traitList.innerHTML = result.traits.map(trait => `<li>${trait}</li>`).join('');
+            
+            document.getElementById('loadingSpinner').style.display = 'none';
+            document.getElementById('resultContent').style.display = 'block';
+            document.getElementById('resultContent').classList.add('fade-in');
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            scores = { purple: 0, blue: 0, green: 0, gold: 0, pink: 0, red: 0 };
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('intro').style.display = 'block';
+        }
+
+        function shareTwitter() {
+            const text = encodeURIComponent("I just discovered my aura color! ✨ Find out yours with the Aura Color Detector 🔮");
+            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${encodeURIComponent(window.location.href)}`, '_blank');
+        }
+
+        function shareFacebook() {
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank');
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('Link copied to clipboard! ✨');
+            });
+        }
+
+        // Initialize
+        createParticles();
+    </script>
+</body>
+</html>
